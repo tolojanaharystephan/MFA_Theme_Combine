@@ -1,0 +1,26 @@
+@startuml
+actor User
+participant "NextJS Frontend" as FE
+participant "Express API" as API
+participant "Auth Service" as Auth
+participant "User Repository" as Repo
+database "MySQL" as DB
+participant "Audit Logger" as Audit
+
+User -> FE : Saisit email/mot de passe
+FE -> API : POST /api/auth/login
+API -> Auth : validateCredentials(dto)
+Auth -> Repo : findByEmail(email)
+Repo -> DB : SELECT user + role
+DB --> Repo : user
+Repo --> Auth : user
+Auth -> Auth : bcrypt.compare()
+Auth -> Auth : generate access + refresh tokens
+Auth -> Repo : saveRefreshToken(hash)
+Repo -> DB : INSERT refresh_tokens
+Auth -> Audit : log LOGIN_SUCCESS
+Audit -> DB : INSERT audit_logs
+Auth --> API : tokens + user profile
+API --> FE : 200 OK
+FE --> User : Dashboard selon role
+@enduml

@@ -1,0 +1,68 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+
+actor "Administrateur systeme" as Admin
+actor "Officier RH" as HR
+actor "Commandant d'unite" as Commander
+actor "Officier operations" as Ops
+actor "Analyste strategique" as Analyst
+actor "Autorite decisionnelle" as Authority
+actor "Auditeur securite" as Auditor
+actor "Service IA" as AI
+
+rectangle "Plateforme MFA Decision" {
+  usecase "Se connecter" as UC_Login
+  usecase "Gerer utilisateurs" as UC_Users
+  usecase "Gerer roles et permissions" as UC_Roles
+  usecase "Gerer personnels militaires" as UC_Personnel
+  usecase "Gerer grades et competences" as UC_Refs
+  usecase "Gerer unites" as UC_Units
+  usecase "Consulter effectifs unite" as UC_UnitStats
+  usecase "Planifier operation" as UC_Operation
+  usecase "Gerer missions" as UC_Mission
+  usecase "Affecter ressources" as UC_Assign
+  usecase "Consulter dashboard" as UC_Dashboard
+  usecase "Generer rapport PDF" as UC_Report
+  usecase "Obtenir recommandations" as UC_AI
+  usecase "Detecter anomalies" as UC_Anomaly
+  usecase "Consulter audit logs" as UC_Audit
+}
+
+Admin --> UC_Login
+Admin --> UC_Users
+Admin --> UC_Roles
+Admin --> UC_Audit
+
+HR --> UC_Login
+HR --> UC_Personnel
+HR --> UC_Refs
+HR --> UC_Units
+
+Commander --> UC_Login
+Commander --> UC_UnitStats
+Commander --> UC_Dashboard
+
+Ops --> UC_Login
+Ops --> UC_Operation
+Ops --> UC_Mission
+Ops --> UC_Assign
+Ops --> UC_AI
+
+Analyst --> UC_Login
+Analyst --> UC_Dashboard
+Analyst --> UC_AI
+Analyst --> UC_Anomaly
+Analyst --> UC_Report
+
+Authority --> UC_Login
+Authority --> UC_Dashboard
+Authority --> UC_Report
+
+Auditor --> UC_Login
+Auditor --> UC_Audit
+
+UC_AI --> AI
+UC_Anomaly --> AI
+@enduml
+

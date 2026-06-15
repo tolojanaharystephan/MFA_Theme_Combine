@@ -1,0 +1,26 @@
+@startuml
+actor "Officier operations" as Ops
+participant "NextJS Frontend" as FE
+participant "Express API" as API
+participant "Mission Service" as Mission
+participant "Personnel Repository" as PersonnelRepo
+participant "AI Client" as AIClient
+participant "FastAPI AI Service" as AI
+database "MySQL" as DB
+
+Ops -> FE : Demande recommandations mission
+FE -> API : GET /api/missions/{id}/recommendations
+API -> Mission : getRecommendationContext(missionId)
+Mission -> DB : SELECT mission + requirements
+Mission -> PersonnelRepo : findAvailableCandidates()
+PersonnelRepo -> DB : SELECT personnels + skills + assignments
+Mission -> AIClient : recommend(context, candidates)
+AIClient -> AI : POST /recommendations/assignments
+AI -> AI : Calcul score competence/disponibilite/experience
+AI --> AIClient : Liste classee + justification
+AIClient --> Mission : recommendations
+Mission -> DB : INSERT ai_recommendations
+Mission --> API : DTO recommendations
+API --> FE : 200 OK
+FE --> Ops : Affiche scores et justifications
+@enduml

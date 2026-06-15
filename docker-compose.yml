@@ -1,0 +1,74 @@
+services:
+  mysql:
+    image: mysql:8.4
+    container_name: mfa-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_USER: mfa_user
+      MYSQL_PASSWORD: mfa_password
+      MYSQL_DATABASE: mfa_decision
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "mfa_user", "-pmfa_password"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+    container_name: mfa-backend
+    restart: unless-stopped
+    depends_on:
+      mysql:
+        condition: service_healthy
+      ai-service:
+        condition: service_started
+    environment:
+      NODE_ENV: development
+      PORT: 4000
+      DATABASE_URL: mysql://mfa_user:mfa_password@mysql:3306/mfa_decision
+      JWT_ACCESS_SECRET: change_me_access_secret
+      JWT_REFRESH_SECRET: change_me_refresh_secret
+      JWT_ACCESS_EXPIRES_IN: 15m
+      JWT_REFRESH_EXPIRES_IN: 7d
+      CORS_ORIGIN: http://localhost:3000
+      AI_SERVICE_URL: http://ai-service:8000
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+
+  ai-service:
+    build:
+      context: ./ai-service
+    container_name: mfa-ai-service
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./ai-service:/app
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: mfa-frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:4000/api/v1
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+      - /app/.next
+
+volumes:
+  mysql_data:

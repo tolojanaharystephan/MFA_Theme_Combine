@@ -1,0 +1,30 @@
+@startuml
+node "Poste utilisateur" {
+  artifact "Navigateur Web" as Browser
+}
+
+node "Serveur applicatif / VPS" {
+  node "Docker Network" {
+    node "frontend container" {
+      artifact "NextJS app" as NextApp
+    }
+
+    node "backend container" {
+      artifact "Express API" as ApiApp
+    }
+
+    node "ai-service container" {
+      artifact "FastAPI service" as AiApp
+    }
+
+    database "mysql container" {
+      artifact "MySQL database" as Pg
+    }
+  }
+}
+
+Browser --> NextApp : HTTPS
+NextApp --> ApiApp : HTTP internal/API
+ApiApp --> Pg : Drizzle/MySQL
+ApiApp --> AiApp : HTTP internal
+@enduml

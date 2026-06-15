@@ -1,0 +1,33 @@
+@startuml
+skinparam componentStyle rectangle
+
+actor "Utilisateur" as User
+
+component "Frontend NextJS\nApp Router + Tailwind + Shadcn/UI" as Frontend
+component "Backend API\nNodeJS + Express + TypeScript" as Backend
+component "Module Auth/RBAC" as Auth
+component "Modules metier\nPersonnel, Operations, Reports" as Modules
+component "Analytics Service" as Analytics
+component "AI Client" as AIClient
+component "AI Service\nFastAPI + scikit-learn" as AI
+database "MySQL" as DB
+component "Drizzle ORM" as ORM
+component "PDF Generator" as PDF
+component "Audit Logger" as Audit
+
+User --> Frontend
+Frontend --> Backend : REST/JSON
+Backend --> Auth
+Backend --> Modules
+Backend --> Analytics
+Backend --> AIClient
+Backend --> Audit
+Backend --> PDF
+Modules --> ORM
+Analytics --> ORM
+Audit --> ORM
+Auth --> ORM
+ORM --> DB
+AIClient --> AI : HTTP internal
+AI --> Backend : scores/recommendations
+@enduml

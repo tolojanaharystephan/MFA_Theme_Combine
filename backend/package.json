@@ -1,0 +1,49 @@
+{
+  "name": "mfa-backend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch --loader ts-node/esm src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "lint": "eslint src --ext .ts",
+    "format": "prettier --write \"src/**/*.ts\" \"drizzle.config.ts\"",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:studio": "drizzle-kit studio",
+    "seed": "node --loader ts-node/esm src/database/seed.ts"
+  },
+  "dependencies": {
+    "axios": "latest",
+    "bcrypt": "latest",
+    "cors": "latest",
+    "dotenv": "latest",
+    "drizzle-orm": "latest",
+    "express": "latest",
+    "express-rate-limit": "latest",
+    "helmet": "latest",
+    "jsonwebtoken": "latest",
+    "multer": "latest",
+    "mysql2": "latest",
+    "pino": "latest",
+    "pino-http": "latest",
+    "zod": "latest"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "latest",
+    "@types/cors": "latest",
+    "@types/express": "latest",
+    "@types/jsonwebtoken": "latest",
+    "@types/multer": "latest",
+    "@types/node": "latest",
+    "@typescript-eslint/eslint-plugin": "latest",
+    "@typescript-eslint/parser": "latest",
+    "eslint": "latest",
+    "prettier": "latest",
+    "pino-pretty": "latest",
+    "drizzle-kit": "latest",
+    "ts-node": "latest",
+    "typescript": "latest"
+  }
+}

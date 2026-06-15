@@ -1,0 +1,126 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+class User {
+  +UUID id
+  +String email
+  +String passwordHash
+  +String fullName
+  +UserStatus status
+  +DateTime lastLoginAt
+}
+
+class Role {
+  +UUID id
+  +String name
+  +String description
+}
+
+class Permission {
+  +UUID id
+  +String key
+  +String description
+}
+
+class MilitaryPersonnel {
+  +UUID id
+  +String serviceNumber
+  +String firstName
+  +String lastName
+  +String gender
+  +Date birthDate
+  +AvailabilityStatus availabilityStatus
+  +String healthStatus
+}
+
+class Grade {
+  +UUID id
+  +String name
+  +Int rankOrder
+  +String category
+}
+
+class Unit {
+  +UUID id
+  +String name
+  +String code
+  +String type
+  +String location
+  +String status
+}
+
+class Skill {
+  +UUID id
+  +String name
+  +String category
+}
+
+class Assignment {
+  +UUID id
+  +String roleTitle
+  +Date startDate
+  +Date endDate
+  +String reason
+}
+
+class Operation {
+  +UUID id
+  +String code
+  +String title
+  +String objective
+  +Priority priority
+  +OperationStatus status
+  +String area
+}
+
+class Mission {
+  +UUID id
+  +String title
+  +String description
+  +RiskLevel riskLevel
+  +MissionStatus status
+  +Json requiredSkills
+}
+
+class Report {
+  +UUID id
+  +String title
+  +String type
+  +String filePath
+  +String summary
+}
+
+class AuditLog {
+  +UUID id
+  +String action
+  +String entity
+  +UUID entityId
+  +String ipAddress
+  +Json metadata
+}
+
+class AiRecommendation {
+  +UUID id
+  +String recommendationType
+  +Json payload
+  +Decimal score
+}
+
+Role "1" -- "0..*" User
+Role "0..*" -- "0..*" Permission
+Grade "1" -- "0..*" MilitaryPersonnel
+Unit "1" -- "0..*" MilitaryPersonnel
+Unit "0..1" -- "0..*" Unit : parent
+MilitaryPersonnel "0..*" -- "0..*" Skill
+MilitaryPersonnel "1" -- "0..*" Assignment
+Unit "1" -- "0..*" Assignment
+Operation "1" -- "0..*" Mission
+Mission "0..*" -- "0..*" MilitaryPersonnel
+Mission "0..*" -- "0..*" Unit
+Operation "0..1" -- "0..*" Report
+Mission "0..1" -- "0..*" Report
+User "1" -- "0..*" Report
+User "0..1" -- "0..*" AuditLog
+Mission "1" -- "0..*" AiRecommendation
+@enduml
+
