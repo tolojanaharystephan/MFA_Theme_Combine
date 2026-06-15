@@ -1,0 +1,17 @@
+{
+  "name": "mfa-decision-platform",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "docker:up": "docker compose up --build",
+    "docker:down": "docker compose down",
+    "backend:dev": "npm --prefix backend run dev",
+    "backend:build": "npm --prefix backend run build",
+    "frontend:dev": "npm --prefix frontend run dev",
+    "frontend:build": "npm --prefix frontend run build",
+    "ai:dev": "uvicorn app.main:app --reload --port 8000 --app-dir ai-service",
+    "db:generate": "npm --prefix backend run db:generate",
+    "db:migrate": "npm --prefix backend run db:migrate",
+    "seed": "npm --prefix backend run seed"
+  }
+}

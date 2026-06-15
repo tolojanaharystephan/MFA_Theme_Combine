@@ -19,6 +19,32 @@ database/    Scripts init/seed SQL optionnels
 docs/        Analyse, architecture et UML
 ```
 
+## Modules disponibles
+
+Backend API:
+
+- Authentification JWT et refresh token
+- Utilisateurs, roles et permissions
+- Grades, competences, unites
+- Personnels militaires et affectations
+- Operations et missions
+- Analytics decisionnel
+- Recommandations IA via FastAPI
+- Rapports PDF
+- Upload securise de fichiers
+- Audit logs
+
+Frontend:
+
+- `/login`
+- `/dashboard`
+- `/personnel`
+- `/operations`
+- `/missions`
+- `/ai`
+- `/reports`
+- `/security`
+
 ## Demarrage rapide
 
 ```bash

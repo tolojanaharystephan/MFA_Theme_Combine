@@ -1,5 +1,6 @@
 node_modules/
 .next/
+.next-build/
 dist/
 coverage/
 .env
@@ -10,4 +11,5 @@ __pycache__/
 .venv/
 postgres_data/
 *.log
-
+backend/uploads/*
+!backend/uploads/.gitkeep

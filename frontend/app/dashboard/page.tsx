@@ -38,7 +38,8 @@ const navItems = [
   { label: "Dashboard", icon: LayoutDashboard, href: "/dashboard" },
   { label: "Personnels", icon: UsersRound, href: "/personnel" },
   { label: "Operations", icon: Shield, href: "/operations" },
-  { label: "Analyse IA", icon: BrainCircuit, href: "/ai-analysis" },
+  { label: "Missions", icon: BarChart3, href: "/missions" },
+  { label: "Analyse IA", icon: BrainCircuit, href: "/ai" },
   { label: "Rapports", icon: FileText, href: "/reports" },
   { label: "Securite", icon: LockKeyhole, href: "/security" }
 ];
